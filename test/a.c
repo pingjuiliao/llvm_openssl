@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "mymath.h"
 
 void
 odd(int n) {
@@ -23,5 +24,7 @@ main(int argc, char** argv) {
     even(num);
   }
 
+  int r = fibo(num);
+  printf("fibo: %d\n", r);
   return 0;
 }
