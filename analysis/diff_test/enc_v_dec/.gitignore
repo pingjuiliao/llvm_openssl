@@ -1,4 +1,4 @@
-./ciphertext
-./decrypted
-./trace*
-./diff_report.txt
+ciphertext
+decrypted
+trace*
+diff_report.txt
