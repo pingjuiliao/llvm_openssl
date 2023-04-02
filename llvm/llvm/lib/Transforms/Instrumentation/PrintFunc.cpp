@@ -10,7 +10,9 @@ PreservedAnalyses PrintFuncPass::run(Module& M, ModuleAnalysisManager& AM) {
   ConstantPointerNull* NullPtr8 = ConstantPointerNull::get(Ptr8Ty);
   
   FunctionCallee FputsFunc = M.getOrInsertFunction("fputs", FunctionType::get(Int32Ty, {Ptr8Ty, Ptr8Ty}, false));
+  FunctionCallee FprintfFunc = M.getOrInsertFunction("fprintf", FunctionType::get(Int32Ty, {Ptr8Ty}, true));
   FunctionCallee FopenFunc = M.getOrInsertFunction("fopen", FunctionType::get(Ptr8Ty, {Int32Ty, Ptr8Ty}, false));
+  FunctionCallee GetpidFunc = M.getOrInsertFunction("getpid", FunctionType::get(Int32Ty, {}, false));
   FunctionCallee StrcmpFunc = M.getOrInsertFunction("strcmp", FunctionType::get(Int32Ty, {Ptr8Ty, Ptr8Ty}, false));
   
   GlobalVariable* FilePtrGV = new GlobalVariable(M, Ptr8Ty, false, GlobalValue::CommonLinkage, NullPtr8, "__print_func_ofile");
@@ -27,7 +29,7 @@ PreservedAnalyses PrintFuncPass::run(Module& M, ModuleAnalysisManager& AM) {
     BasicBlock* PrintBB = ChkRecurBB->splitBasicBlock(ChkRecurBB->getFirstInsertionPt(), "__print_func_print");
     BasicBlock* RetBB = PrintBB->splitBasicBlock(PrintBB->getFirstInsertionPt(), "__print_func_ret");
 
-    std::string s = "[LLVM TRACE] " + F.getName().str() + "\n";
+    std::string s = F.getName().str() + "| pid:%8u\n";
 
     // CheckBB
     IRBuilder<> CheckIRB(CheckBB->getTerminator());
@@ -58,9 +60,10 @@ PreservedAnalyses PrintFuncPass::run(Module& M, ModuleAnalysisManager& AM) {
     
     // PrintBB
     IRBuilder<> PrintIRB(PrintBB->getTerminator());
+    Value* Pid = PrintIRB.CreateCall(GetpidFunc, {});
     Value* FuncName = PrintIRB.CreateGlobalStringPtr(s);
     LoadInst* LdFilePtrAgain = PrintIRB.CreateLoad(Ptr8Ty, FilePtrGV);
-    PrintIRB.CreateCall(FputsFunc, {FuncName, LdFilePtrAgain});
+    PrintIRB.CreateCall(FprintfFunc, {LdFilePtrAgain, FuncName, Pid});
     PrintIRB.CreateStore(FuncName, PrevFuncGV);
     PrintIRB.CreateBr(RetBB);
   }
