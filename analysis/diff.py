@@ -24,8 +24,13 @@ def diff(file0, file1):
     tuple0 = s0.strip().split(b"\n")
     tuple1 = s1.strip().split(b"\n")
 
-    set0 = set(tuple0)
-    set1 = set(tuple1)
+
+    set0 = set()
+    set1 = set()
+    for tup0 in tuple0:
+        set0.add(tup0.split(b"|")[0])
+    for tup1 in tuple1:
+        set1.add(tup1.split(b"|")[0])
 
     paragraph0 = b"[STATS]\n"
     paragraph0 += b"$$ " + file0.encode() + b" $$\n"
@@ -34,11 +39,11 @@ def diff(file0, file1):
     paragraph0 += "uniq func:{}\n".format(len(set1)).encode()
 
     paragraph1 = "\n\n[Uniq Func in {}]\n".format(file0).encode()
-    for tup in (set0 - set1):
+    for tup in sorted(list(set0 - set1)):
         paragraph1 += tup + b"\n"
 
     paragraph2 = "\n\n[Uniq Func in {}]\n".format(file1).encode()
-    for tup in (set1 - set0):
+    for tup in sorted(list((set1 - set0))):
         paragraph2 += tup + b"\n"
 
     with open(OUTFILE, "wb") as f:
