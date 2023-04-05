@@ -1,0 +1,24 @@
+[STATS]
+$$ trace_camellia.txt $$
+uniq func:877
+
+$$ trace_sm4.txt $$
+uniq func:877
+
+
+[Uniq Func in trace_camellia.txt]
+crypto/camellia/cmll_misc.c:Camellia_encrypt
+crypto/camellia/cmll_misc.c:Camellia_set_key
+providers/implementations/ciphers/cipher_camellia.c:camellia_128_ecb_newctx
+providers/implementations/ciphers/cipher_camellia.c:camellia_freectx
+providers/implementations/ciphers/cipher_camellia_hw.c:cipher_hw_camellia_initkey
+providers/implementations/ciphers/cipher_camellia_hw.c:ossl_prov_cipher_hw_camellia_ecb
+
+
+[Uniq Func in trace_sm4.txt]
+crypto/sm4/sm4.c:ossl_sm4_encrypt
+crypto/sm4/sm4.c:ossl_sm4_set_key
+providers/implementations/ciphers/cipher_sm4.c:sm4_128_ecb_newctx
+providers/implementations/ciphers/cipher_sm4.c:sm4_freectx
+providers/implementations/ciphers/cipher_sm4_hw.c:cipher_hw_sm4_initkey
+providers/implementations/ciphers/cipher_sm4_hw.c:ossl_prov_cipher_hw_sm4_ecb

@@ -1,0 +1,24 @@
+[STATS]
+$$ trace_aes.txt $$
+uniq func:875
+
+$$ trace_sm4.txt $$
+uniq func:877
+
+
+[Uniq Func in trace_aes.txt]
+providers/implementations/ciphers/cipher_aes.c:aes_128_ecb_newctx
+providers/implementations/ciphers/cipher_aes.c:aes_freectx
+providers/implementations/ciphers/cipher_aes_hw.c:cipher_hw_aesni_ecb
+providers/implementations/ciphers/cipher_aes_hw.c:cipher_hw_aesni_initkey
+providers/implementations/ciphers/cipher_aes_hw.c:ossl_prov_cipher_hw_aes_ecb
+
+
+[Uniq Func in trace_sm4.txt]
+crypto/sm4/sm4.c:ossl_sm4_encrypt
+crypto/sm4/sm4.c:ossl_sm4_set_key
+providers/implementations/ciphers/cipher_sm4.c:sm4_128_ecb_newctx
+providers/implementations/ciphers/cipher_sm4.c:sm4_freectx
+providers/implementations/ciphers/cipher_sm4_hw.c:cipher_hw_sm4_initkey
+providers/implementations/ciphers/cipher_sm4_hw.c:ossl_prov_cipher_hw_sm4_ecb
+providers/implementations/ciphers/ciphercommon_hw.c:ossl_cipher_hw_generic_ecb

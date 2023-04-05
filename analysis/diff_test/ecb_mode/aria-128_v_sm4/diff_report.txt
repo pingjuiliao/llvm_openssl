@@ -1,0 +1,24 @@
+[STATS]
+$$ trace_aria.txt $$
+uniq func:877
+
+$$ trace_sm4.txt $$
+uniq func:877
+
+
+[Uniq Func in trace_aria.txt]
+crypto/aria/aria.c:ossl_aria_encrypt
+crypto/aria/aria.c:ossl_aria_set_encrypt_key
+providers/implementations/ciphers/cipher_aria.c:aria_128_ecb_newctx
+providers/implementations/ciphers/cipher_aria.c:aria_freectx
+providers/implementations/ciphers/cipher_aria_hw.c:cipher_hw_aria_initkey
+providers/implementations/ciphers/cipher_aria_hw.c:ossl_prov_cipher_hw_aria_ecb
+
+
+[Uniq Func in trace_sm4.txt]
+crypto/sm4/sm4.c:ossl_sm4_encrypt
+crypto/sm4/sm4.c:ossl_sm4_set_key
+providers/implementations/ciphers/cipher_sm4.c:sm4_128_ecb_newctx
+providers/implementations/ciphers/cipher_sm4.c:sm4_freectx
+providers/implementations/ciphers/cipher_sm4_hw.c:cipher_hw_sm4_initkey
+providers/implementations/ciphers/cipher_sm4_hw.c:ossl_prov_cipher_hw_sm4_ecb

@@ -5,7 +5,7 @@ namespace llvm {
 PreservedAnalyses PrintFuncPass::run(Module& M, ModuleAnalysisManager& AM) {
   LLVMContext& C = M.getContext();
   IntegerType* Int32Ty = IntegerType::getInt32Ty(C);
-  IntegerType* Int64Ty = IntegerType::getInt64Ty(C);
+  // IntegerType* Int64Ty = IntegerType::getInt64Ty(C);
   PointerType* Ptr8Ty = PointerType::getInt8PtrTy(C); 
   ConstantPointerNull* NullPtr8 = ConstantPointerNull::get(Ptr8Ty);
   
@@ -28,8 +28,9 @@ PreservedAnalyses PrintFuncPass::run(Module& M, ModuleAnalysisManager& AM) {
     BasicBlock* ChkRecurBB = SetupBB->splitBasicBlock(SetupBB->getFirstInsertionPt(), "__print_func_chk_recur");
     BasicBlock* PrintBB = ChkRecurBB->splitBasicBlock(ChkRecurBB->getFirstInsertionPt(), "__print_func_print");
     BasicBlock* RetBB = PrintBB->splitBasicBlock(PrintBB->getFirstInsertionPt(), "__print_func_ret");
-
-    std::string s = F.getName().str() + "| pid:%8u\n";
+  
+    std::string SrcFile = F.getParent()->getSourceFileName();
+    std::string s = SrcFile + ":" + F.getName().str() + "| pid:%8u\n";
 
     // CheckBB
     IRBuilder<> CheckIRB(CheckBB->getTerminator());
