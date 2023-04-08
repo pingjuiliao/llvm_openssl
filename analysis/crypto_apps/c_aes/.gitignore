@@ -1,0 +1,5 @@
+encrypted
+decrypted
+*.o
+*.exe
+trace*
